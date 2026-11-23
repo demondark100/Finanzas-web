@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import {
   createUser,
   findUserByEmail,
@@ -48,6 +49,8 @@ export async function loginPasswordAction(formData: FormData): Promise<AuthActio
     const user = await verifyUserCredentials(email, password);
     if (!user) return { success: false, error: "Correo o contraseña incorrectos" };
 
+    const cookieStore = await cookies();
+    cookieStore.delete("finanzas_locked");
     await createSession({ userId: user.id, email: user.email, name: user.name, isUnlocked: true });
     return { success: true };
   } catch (err: unknown) {
@@ -56,24 +59,12 @@ export async function loginPasswordAction(formData: FormData): Promise<AuthActio
   }
 }
 
-export async function loginEmailPinAction(formData: FormData): Promise<AuthActionResult> {
-  try {
-    const email = (formData.get("email") as string || "").trim();
-    const pin = (formData.get("pin") as string || "").trim();
-
-    if (!email || !pin) return { success: false, error: "Ingresa tu correo y tu PIN" };
-    const user = await findUserByEmail(email);
-    if (!user) return { success: false, error: "Correo no registrado" };
-
-    const isValid = await verifyUserPin(user.id, pin);
-    if (!isValid) return { success: false, error: "PIN incorrecto" };
-
-    await createSession({ userId: user.id, email: user.email, name: user.name, isUnlocked: true });
-    return { success: true };
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : "Error al verificar PIN";
-    return { success: false, error: message };
-  }
+export async function lockSessionAction(): Promise<void> {
+  const cookieStore = await cookies();
+  cookieStore.set("finanzas_locked", "true", {
+    path: "/",
+    maxAge: 30 * 24 * 60 * 60,
+  });
 }
 
 export async function loginPinAction(pin: string): Promise<AuthActionResult> {
@@ -84,6 +75,8 @@ export async function loginPinAction(pin: string): Promise<AuthActionResult> {
     const isValid = await verifyUserPin(session.userId, pin);
     if (!isValid) return { success: false, error: "PIN incorrecto" };
 
+    const cookieStore = await cookies();
+    cookieStore.delete("finanzas_locked");
     await createSession({ ...session, isUnlocked: true });
     return { success: true };
   } catch (err: unknown) {
@@ -93,6 +86,8 @@ export async function loginPinAction(pin: string): Promise<AuthActionResult> {
 }
 
 export async function logoutAction(): Promise<void> {
+  const cookieStore = await cookies();
+  cookieStore.delete("finanzas_locked");
   await destroySession();
   redirect("/login");
 }

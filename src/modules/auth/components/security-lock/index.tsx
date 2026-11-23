@@ -2,38 +2,46 @@
 
 import React, { useState, useEffect, useRef, useTransition } from "react";
 import { PinPad } from "@/components/ui/pin-pad";
-import { loginPinAction, logoutAction } from "../../handlers/auth-actions";
+import { loginPinAction, logoutAction, lockSessionAction } from "../../handlers/auth-actions";
 import styles from "./security-lock.module.css";
 
 interface SecurityLockProps {
   userName: string;
+  initialLocked?: boolean;
   timeoutMinutes?: number;
 }
 
-export function SecurityLock({ userName, timeoutMinutes = 2 }: SecurityLockProps) {
-  const [isLocked, setIsLocked] = useState(false);
+export function SecurityLock({
+  userName,
+  initialLocked = false,
+  timeoutMinutes = 2,
+}: SecurityLockProps) {
+  const [isLocked, setIsLocked] = useState(initialLocked);
   const [pin, setPin] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
   const lastActiveRef = useRef<number>(Date.now());
   const timeoutMs = timeoutMinutes * 60 * 1000;
 
+  const triggerLock = () => {
+    setIsLocked(true);
+    localStorage.setItem("finanzas_locked", "true");
+    lockSessionAction();
+  };
+
   useEffect(() => {
-    const updateActivity = () => {
-      if (!isLocked) lastActiveRef.current = Date.now();
-    };
+    if (localStorage.getItem("finanzas_locked") === "true") {
+      setIsLocked(true);
+      lockSessionAction();
+    }
 
+    const updateActivity = () => { if (!isLocked) lastActiveRef.current = Date.now(); };
     const checkTimeout = () => {
-      if (!isLocked && Date.now() - lastActiveRef.current >= timeoutMs) {
-        setIsLocked(true);
-      }
+      if (!isLocked && Date.now() - lastActiveRef.current >= timeoutMs) triggerLock();
     };
-
     const handleVisibility = () => {
-      if (document.visibilityState === "visible") {
-        if (Date.now() - lastActiveRef.current >= 30000) {
-          setIsLocked(true); // Bloquear al volver tras 30s de inactividad
-        }
+      if (document.visibilityState === "visible" && Date.now() - lastActiveRef.current >= 30000) {
+        triggerLock();
       }
     };
 
@@ -58,9 +66,11 @@ export function SecurityLock({ userName, timeoutMinutes = 2 }: SecurityLockProps
           setError(res.error || "PIN incorrecto");
           setPin("");
         } else {
+          localStorage.removeItem("finanzas_locked");
           setIsLocked(false);
           setPin("");
           lastActiveRef.current = Date.now();
+          window.location.reload(); // Recargar para que el servidor entregue la vista desbloqueada
         }
       } catch {
         setError("Error al verificar PIN");

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 import { getSession } from "@/modules/auth/services/session-service";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { SecurityLock } from "@/modules/auth/components/security-lock";
@@ -15,13 +16,20 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
+  const cookieStore = await cookies();
+  const isLocked = cookieStore.get("finanzas_locked")?.value === "true";
+
   return (
     <div className={styles.layoutContainer}>
-      <SecurityLock userName={session.name} />
-      <div className={styles.contentWrapper}>
-        {children}
-      </div>
-      <BottomNav />
+      <SecurityLock userName={session.name} initialLocked={isLocked} />
+      {!isLocked && (
+        <>
+          <div className={styles.contentWrapper}>
+            {children}
+          </div>
+          <BottomNav />
+        </>
+      )}
     </div>
   );
 }
