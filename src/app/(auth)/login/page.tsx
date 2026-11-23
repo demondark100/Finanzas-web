@@ -1,15 +1,11 @@
-import { getSession } from "@/modules/auth/services/session-service";
-import { LoginView } from "@/modules/auth/components/login-view";
+import { LoginPassword } from "@/modules/auth/components/login-password";
 import styles from "@/modules/auth/components/auth.module.css";
 
 export const metadata = {
   title: "Iniciar Sesión | Finanzas-web",
 };
 
-export default async function LoginPage() {
-  const session = await getSession();
-  const hasSavedSession = Boolean(session?.userId);
-
+export default function LoginPage() {
   return (
     <main className={styles.authWrapper}>
       <div className={styles.brandHeader}>
@@ -18,10 +14,7 @@ export default async function LoginPage() {
         <p className={styles.subtitle}>Tus cuentas y préstamos bajo control</p>
       </div>
 
-      <LoginView
-        initialUserName={session?.name}
-        hasSavedSession={hasSavedSession}
-      />
+      <LoginPassword />
     </main>
   );
 }

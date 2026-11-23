@@ -65,8 +65,10 @@ Este archivo es la **fuente de la verdad del proyecto**. Cualquier desarrollador
 
 ### ✅ Paso 1: Autenticación con PIN tipo Yape y Supabase (COMPLETADO)
 * Base de datos PostgreSQL en Supabase con Drizzle ORM.
-* Flujo de dos pasos: credenciales y creación guiada de PIN de 6 dígitos con teclado táctil `PinPad`.
+* Flujo de registro guiado: credenciales y creación de PIN de 6 dígitos con teclado táctil `PinPad`.
+* Login estándar con Correo y Contraseña maestra.
 * Sesión persistente de 30 días con cookies `HttpOnly` y encriptación ligera `jose`.
+* **Bloqueo por Inactividad tipo Yape (`SecurityLock`):** Cuando el usuario deja la app inactiva o sale y regresa, la app se bloquea automáticamente por seguridad mostrando la pantalla de PIN con su nombre para desbloqueo instantáneo con teclado numérico.
 * Componentes de input con ojito para contraseñas, botón `✕` para borrado rápido y mensajes de error directos.
 
 ### ✅ Paso 2: Shell Base, Navegación Móvil (BottomNav), Temas e i18n (COMPLETADO)
