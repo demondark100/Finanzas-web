@@ -22,13 +22,17 @@ export function PinUnlock({ userName, onUsePassword }: PinUnlockProps) {
   const handleComplete = (completedPin: string) => {
     setError(null);
     startTransition(async () => {
-      const result = await loginPinAction(completedPin);
-      if (!result.success) {
-        setError(result.error || "PIN incorrecto");
+      try {
+        const result = await loginPinAction(completedPin);
+        if (!result.success) {
+          setError(result.error || "PIN incorrecto");
+          setPin("");
+        } else {
+          window.location.href = "/";
+        }
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Error al verificar PIN");
         setPin("");
-      } else {
-        router.push("/");
-        router.refresh();
       }
     });
   };

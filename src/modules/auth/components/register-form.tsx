@@ -48,13 +48,17 @@ export function RegisterForm() {
     data.append("pin", pin);
 
     startTransition(async () => {
-      const result = await registerAction(data);
-      if (!result.success) {
-        setError(result.error || "Ocurrió un error al registrarse");
+      try {
+        const result = await registerAction(data);
+        if (!result.success) {
+          setError(result.error || "Ocurrió un error al registrarse");
+          setStep("credentials");
+        } else {
+          window.location.href = "/";
+        }
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Error al conectar con el servidor");
         setStep("credentials");
-      } else {
-        router.push("/");
-        router.refresh();
       }
     });
   };

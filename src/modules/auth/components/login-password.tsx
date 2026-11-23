@@ -25,12 +25,15 @@ export function LoginPassword({ onShowPin, hasSavedSession }: LoginPasswordProps
     const formData = new FormData(e.currentTarget);
 
     startTransition(async () => {
-      const res = await loginPasswordAction(formData);
-      if (!res.success) {
-        setError(res.error || "Credenciales incorrectas");
-      } else {
-        router.push("/");
-        router.refresh();
+      try {
+        const res = await loginPasswordAction(formData);
+        if (!res.success) {
+          setError(res.error || "Credenciales incorrectas");
+        } else {
+          window.location.href = "/";
+        }
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Error al conectar con el servidor");
       }
     });
   };
