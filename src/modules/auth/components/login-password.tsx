@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,39 +14,72 @@ interface LoginPasswordProps {
 }
 
 export function LoginPassword({ onShowPin, hasSavedSession }: LoginPasswordProps) {
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
+    setServerError(null);
     const formData = new FormData(e.currentTarget);
+    const email = (formData.get("email") as string || "").trim();
+    const password = (formData.get("password") as string || "");
+
+    const errors: { email?: string; password?: string } = {};
+    if (!email) {
+      errors.email = "Ingresa tu correo electrónico";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "El formato de correo no es válido";
+    }
+
+    if (!password) {
+      errors.password = "Ingresa tu contraseña";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+    setFieldErrors({});
 
     startTransition(async () => {
       try {
         const res = await loginPasswordAction(formData);
         if (!res.success) {
-          setError(res.error || "Credenciales incorrectas");
+          setServerError(res.error || "Credenciales incorrectas");
         } else {
           window.location.href = "/";
         }
       } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : "Error al conectar con el servidor");
+        setServerError(err instanceof Error ? err.message : "Error al conectar");
       }
     });
   };
 
   return (
     <Card>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        {error && <div className={styles.alertError}>{error}</div>}
+      <form onSubmit={handleSubmit} noValidate className={styles.form}>
+        {serverError && <div className={styles.alertError}>{serverError}</div>}
 
-        <Input label="Correo Electrónico" name="email" type="email" placeholder="correo@ejemplo.com" required />
-        <Input label="Contraseña" name="password" type="password" placeholder="Tu contraseña" required />
+        <Input
+          label="Correo Electrónico"
+          name="email"
+          type="email"
+          placeholder="correo@ejemplo.com"
+          error={fieldErrors.email}
+          onChange={() => setFieldErrors((prev) => ({ ...prev, email: undefined }))}
+        />
+        <Input
+          label="Contraseña"
+          name="password"
+          type="password"
+          placeholder="Tu contraseña"
+          error={fieldErrors.password}
+          onChange={() => setFieldErrors((prev) => ({ ...prev, password: undefined }))}
+        />
 
         <Button type="submit" disabled={isPending}>
-          {isPending ? "Iniciando sesión..." : "Ingresar"}
+          {isPending ? "Verificando..." : "Ingresar"}
         </Button>
 
         {hasSavedSession && onShowPin && (

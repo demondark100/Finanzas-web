@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -11,36 +10,37 @@ import { RegisterPinStep } from "./register-pin-step";
 import styles from "./auth.module.css";
 
 export function RegisterForm() {
-  const router = useRouter();
   const [step, setStep] = useState<"credentials" | "pin">("credentials");
-  const [formDataState, setFormDataState] = useState<{
-    name: string;
-    email: string;
-    password: string;
-  }>({ name: "", email: "", password: "" });
-
+  const [formDataState, setFormDataState] = useState({ name: "", email: "", password: "" });
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string; email?: string; password?: string }>({});
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
+  const [serverError, setServerError] = useState<string | null>(null);
 
   const handleCredentialsSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
+    setServerError(null);
     const form = new FormData(e.currentTarget);
-    const name = form.get("name") as string;
-    const email = form.get("email") as string;
-    const password = form.get("password") as string;
+    const name = (form.get("name") as string || "").trim();
+    const email = (form.get("email") as string || "").trim();
+    const password = (form.get("password") as string || "");
 
-    if (password.length < 6) {
-      setError("La contraseña debe tener al menos 6 caracteres");
+    const errors: { name?: string; email?: string; password?: string } = {};
+    if (!name || name.length < 2) errors.name = "Ingresa tu nombre completo";
+    if (!email) errors.email = "Ingresa tu correo";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = "Formato de correo no válido";
+    if (!password || password.length < 6) errors.password = "Mínimo 6 caracteres";
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       return;
     }
-
+    setFieldErrors({});
     setFormDataState({ name, email, password });
-    setStep("pin"); // Pasamos inmediatamente a la pantalla de crear PIN tipo Yape
+    setStep("pin");
   };
 
   const handlePinComplete = (pin: string) => {
-    setError(null);
+    setServerError(null);
     const data = new FormData();
     data.append("name", formDataState.name);
     data.append("email", formDataState.email);
@@ -51,13 +51,13 @@ export function RegisterForm() {
       try {
         const result = await registerAction(data);
         if (!result.success) {
-          setError(result.error || "Ocurrió un error al registrarse");
+          setServerError(result.error || "Error al registrarse");
           setStep("credentials");
         } else {
           window.location.href = "/";
         }
       } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : "Error al conectar con el servidor");
+        setServerError(err instanceof Error ? err.message : "Error al conectar");
         setStep("credentials");
       }
     });
@@ -67,15 +67,15 @@ export function RegisterForm() {
     <Card>
       {step === "credentials" ? (
         <>
-          <form onSubmit={handleCredentialsSubmit} className={styles.form}>
-            {error && <div className={styles.alertError}>{error}</div>}
-
+          <form onSubmit={handleCredentialsSubmit} noValidate className={styles.form}>
+            {serverError && <div className={styles.alertError}>{serverError}</div>}
             <Input
               label="Tu Nombre Completo"
               name="name"
               defaultValue={formDataState.name}
               placeholder="Ej. Daniel López"
-              required
+              error={fieldErrors.name}
+              onChange={() => setFieldErrors((p) => ({ ...p, name: undefined }))}
             />
             <Input
               label="Correo Electrónico"
@@ -83,7 +83,8 @@ export function RegisterForm() {
               type="email"
               defaultValue={formDataState.email}
               placeholder="correo@ejemplo.com"
-              required
+              error={fieldErrors.email}
+              onChange={() => setFieldErrors((p) => ({ ...p, email: undefined }))}
             />
             <Input
               label="Crea una Contraseña Maestra"
@@ -91,17 +92,14 @@ export function RegisterForm() {
               type="password"
               defaultValue={formDataState.password}
               placeholder="Mínimo 6 caracteres"
-              required
+              error={fieldErrors.password}
+              onChange={() => setFieldErrors((p) => ({ ...p, password: undefined }))}
             />
-
             <Button type="submit">Continuar a Crear mi PIN →</Button>
           </form>
-
           <div className={styles.footerActions}>
             <p className={styles.subtitle}>¿Ya tienes una cuenta?</p>
-            <Link href="/login" className={styles.switchLink}>
-              Iniciar Sesión
-            </Link>
+            <Link href="/login" className={styles.switchLink}>Iniciar Sesión</Link>
           </div>
         </>
       ) : (
