@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getSession } from "@/modules/auth/services/session-service";
 import { BottomNav } from "@/components/ui/bottom-nav";
+import styles from "./dashboard.module.css";
 
 export default async function DashboardLayout({
   children,
@@ -14,9 +15,8 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div style={{ minHeight: "100vh", position: "relative" }}>
-      {/* Contenedor con margen inferior para evitar que el BottomNav tape el contenido */}
-      <div style={{ paddingBottom: "calc(72px + env(safe-area-inset-bottom, 0px))" }}>
+    <div className={styles.layoutContainer}>
+      <div className={styles.contentWrapper}>
         {children}
       </div>
       <BottomNav />

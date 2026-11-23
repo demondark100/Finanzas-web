@@ -3,42 +3,43 @@ import { getSession } from "@/modules/auth/services/session-service";
 import { logoutAction } from "@/modules/auth/handlers/auth-actions";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import styles from "./dashboard.module.css";
 
 export default async function HomePage() {
   const session = await getSession();
   if (!session?.userId) redirect("/login");
 
   return (
-    <main style={{ padding: "20px 16px", maxWidth: 460, margin: "0 auto" }}>
-      <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+    <main className={styles.pageContainer}>
+      <header className={styles.header}>
         <div>
-          <p style={{ fontSize: 13, color: "var(--color-text-muted)" }}>Bienvenido de nuevo</p>
-          <h1 style={{ fontSize: 22, fontWeight: 700 }}>{session.name}</h1>
+          <p className={styles.greeting}>Bienvenido de nuevo</p>
+          <h1 className={styles.userName}>{session.name}</h1>
         </div>
         <form action={logoutAction}>
-          <Button variant="secondary" style={{ width: "auto", minHeight: 36, padding: "6px 12px", fontSize: 13 }}>
+          <Button variant="secondary" className={styles.logoutSmallBtn}>
             Salir
           </Button>
         </form>
       </header>
 
-      <Card style={{ marginBottom: 20, textAlign: "center", padding: "24px 16px" }}>
-        <p style={{ fontSize: 14, color: "var(--color-text-muted)", marginBottom: 6 }}>Dinero disponible</p>
-        <h2 style={{ fontSize: 36, fontWeight: 800, color: "var(--color-primary)" }}>S/. 0.00</h2>
+      <Card className={styles.balanceCard}>
+        <p className={styles.balanceLabel}>Dinero disponible</p>
+        <h2 className={styles.balanceAmount}>S/. 0.00</h2>
       </Card>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 24 }}>
-        <Button style={{ backgroundColor: "var(--color-income)", color: "#fff" }}>
+      <div className={styles.actionsGrid}>
+        <Button className={styles.btnIncome}>
           + Recibí Dinero
         </Button>
-        <Button style={{ backgroundColor: "var(--color-expense)", color: "#fff" }}>
+        <Button className={styles.btnExpense}>
           - Hice un Gasto
         </Button>
       </div>
 
       <Card>
-        <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>Últimos Movimientos</h3>
-        <p style={{ fontSize: 14, color: "var(--color-text-muted)" }}>
+        <h3 className={styles.sectionHeading}>Últimos Movimientos</h3>
+        <p className={styles.emptyStateText}>
           Aún no tienes movimientos registrados este mes.
         </p>
       </Card>

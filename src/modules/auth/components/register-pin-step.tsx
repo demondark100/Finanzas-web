@@ -48,7 +48,7 @@ export function RegisterPinStep({ onComplete, onBack, isPending }: RegisterPinSt
         </p>
       </div>
 
-      {error && <div className={styles.alertError} style={{ marginBottom: 16 }}>{error}</div>}
+      {error && <div className={styles.alertError}>{error}</div>}
 
       <PinPad
         length={6}

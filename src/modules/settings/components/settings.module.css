@@ -1,0 +1,98 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userHeader {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  user-select: none;
+}
+
+.userName {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.userEmail {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  margin-bottom: 14px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rowWithMargin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.itemLabel {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-main);
+}
+
+.itemDesc {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.themeBtn {
+  padding: 10px 16px;
+  min-height: 42px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-main);
+  border: 1.5px solid var(--color-border);
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.themeBtn:active {
+  transform: scale(0.96);
+}
+
+.badgeValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.logoutBtn {
+  color: var(--color-expense) !important;
+}

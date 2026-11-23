@@ -45,7 +45,7 @@ export function PinUnlock({ userName, onUsePassword }: PinUnlockProps) {
         <p className={styles.subtitle}>Escribe tus 6 dígitos para entrar</p>
       </div>
 
-      {error && <div className={styles.alertError} style={{ marginBottom: 16 }}>{error}</div>}
+      {error && <div className={styles.alertError}>{error}</div>}
 
       <PinPad
         length={6}

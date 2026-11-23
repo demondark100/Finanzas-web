@@ -5,6 +5,7 @@ import { useTheme } from "@/lib/theme";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { logoutAction } from "@/modules/auth/handlers/auth-actions";
+import styles from "./settings.module.css";
 
 interface SettingsViewProps {
   user: {
@@ -17,57 +18,34 @@ export function SettingsView({ user }: SettingsViewProps) {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+    <div className={styles.container}>
       {/* Datos del usuario */}
       <Card>
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-          <div
-            style={{
-              width: 52,
-              height: 52,
-              borderRadius: "var(--radius-full)",
-              backgroundColor: "var(--color-primary-light)",
-              color: "var(--color-primary)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 22,
-              fontWeight: 700,
-            }}
-          >
+        <div className={styles.userHeader}>
+          <div className={styles.avatar}>
             {user.name.charAt(0).toUpperCase()}
           </div>
           <div>
-            <h2 style={{ fontSize: 18, fontWeight: 700 }}>{user.name}</h2>
-            <p style={{ fontSize: 13, color: "var(--color-text-muted)" }}>{user.email}</p>
+            <h2 className={styles.userName}>{user.name}</h2>
+            <p className={styles.userEmail}>{user.email}</p>
           </div>
         </div>
       </Card>
 
       {/* Preferencias de Apariencia */}
       <Card>
-        <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 14 }}>Apariencia</h3>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h3 className={styles.sectionTitle}>Apariencia</h3>
+        <div className={styles.row}>
           <div>
-            <p style={{ fontSize: 15, fontWeight: 600 }}>Modo Oscuro</p>
-            <p style={{ fontSize: 13, color: "var(--color-text-muted)" }}>
+            <p className={styles.itemLabel}>Modo Oscuro</p>
+            <p className={styles.itemDesc}>
               {theme === "dark" ? "Activado (fondo oscuro)" : "Desactivado (fondo claro)"}
             </p>
           </div>
           <button
             type="button"
             onClick={toggleTheme}
-            style={{
-              padding: "8px 14px",
-              borderRadius: "var(--radius-md)",
-              backgroundColor: "var(--color-surface-hover)",
-              border: "1px solid var(--color-border)",
-              fontSize: 14,
-              fontWeight: 600,
-              display: "flex",
-              alignItems: "center",
-              gap: 6,
-            }}
+            className={styles.themeBtn}
           >
             {theme === "dark" ? "☀️ Claro" : "🌙 Oscuro"}
           </button>
@@ -76,20 +54,20 @@ export function SettingsView({ user }: SettingsViewProps) {
 
       {/* Idioma y Moneda */}
       <Card>
-        <h3 style={{ fontSize: 15, fontWeight: 600, marginBottom: 12 }}>Idioma y Moneda</h3>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-          <span style={{ fontSize: 14 }}>Idioma actual</span>
-          <span style={{ fontSize: 14, fontWeight: 600, color: "var(--color-primary)" }}>Español (ES)</span>
+        <h3 className={styles.sectionTitle}>Idioma y Moneda</h3>
+        <div className={styles.rowWithMargin}>
+          <span className={styles.itemLabel}>Idioma actual</span>
+          <span className={styles.badgeValue}>Español (ES)</span>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontSize: 14 }}>Moneda predeterminada</span>
-          <span style={{ fontSize: 14, fontWeight: 600, color: "var(--color-primary)" }}>Soles (S/.)</span>
+        <div className={styles.row}>
+          <span className={styles.itemLabel}>Moneda principal</span>
+          <span className={styles.badgeValue}>Soles (S/.)</span>
         </div>
       </Card>
 
       {/* Salir */}
       <form action={logoutAction}>
-        <Button variant="secondary" style={{ color: "var(--color-expense)" }}>
+        <Button variant="secondary" className={styles.logoutBtn}>
           Cerrar Sesión
         </Button>
       </form>

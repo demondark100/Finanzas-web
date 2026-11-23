@@ -1,0 +1,87 @@
+.layoutContainer {
+  min-height: 100vh;
+  position: relative;
+}
+
+.contentWrapper {
+  padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+}
+
+.pageContainer {
+  padding: 20px 16px;
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.greeting {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.userName {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.logoutSmallBtn {
+  width: auto !important;
+  min-height: 36px !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+}
+
+.balanceCard {
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 24px 16px;
+}
+
+.balanceLabel {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.balanceAmount {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.actionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.btnIncome {
+  background-color: var(--color-income) !important;
+  color: #ffffff !important;
+}
+
+.btnExpense {
+  background-color: var(--color-expense) !important;
+  color: #ffffff !important;
+}
+
+.sectionHeading {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-text-main);
+}
+
+.emptyStateText {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}

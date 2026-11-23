@@ -40,8 +40,8 @@ export async function registerAction(formData: FormData): Promise<AuthActionResu
 
 export async function loginPasswordAction(formData: FormData): Promise<AuthActionResult> {
   try {
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
+    const email = (formData.get("email") as string || "").trim();
+    const password = (formData.get("password") as string || "");
 
     if (!email || !password) return { success: false, error: "Completa todos los campos" };
 
@@ -52,6 +52,26 @@ export async function loginPasswordAction(formData: FormData): Promise<AuthActio
     return { success: true };
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Error al iniciar sesión";
+    return { success: false, error: message };
+  }
+}
+
+export async function loginEmailPinAction(formData: FormData): Promise<AuthActionResult> {
+  try {
+    const email = (formData.get("email") as string || "").trim();
+    const pin = (formData.get("pin") as string || "").trim();
+
+    if (!email || !pin) return { success: false, error: "Ingresa tu correo y tu PIN" };
+    const user = await findUserByEmail(email);
+    if (!user) return { success: false, error: "Correo no registrado" };
+
+    const isValid = await verifyUserPin(user.id, pin);
+    if (!isValid) return { success: false, error: "PIN incorrecto" };
+
+    await createSession({ userId: user.id, email: user.email, name: user.name, isUnlocked: true });
+    return { success: true };
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Error al verificar PIN";
     return { success: false, error: message };
   }
 }

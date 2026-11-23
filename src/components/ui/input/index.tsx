@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./input.module.css";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -15,35 +15,39 @@ export function Input({
   type = "text",
   clearable = true,
   className = "",
-  value: controlledValue,
   defaultValue,
-  onChange,
   id,
+  onChange,
+  onInput,
   ...props
 }: InputProps) {
-  const [internalValue, setInternalValue] = useState(
-    defaultValue !== undefined ? String(defaultValue) : ""
-  );
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [hasValue, setHasValue] = useState(Boolean(defaultValue));
   const [showPassword, setShowPassword] = useState(false);
-
-  const isControlled = controlledValue !== undefined;
-  const currentValue = isControlled ? String(controlledValue) : internalValue;
 
   const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, "-") : undefined);
   const isPassword = type === "password";
   const actualType = isPassword ? (showPassword ? "text" : "password") : type;
 
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    setHasValue(Boolean(e.currentTarget.value));
+    (onInput as unknown as (ev: React.FormEvent<HTMLInputElement>) => void)?.(e);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!isControlled) setInternalValue(e.target.value);
+    setHasValue(Boolean(e.target.value));
     onChange?.(e);
   };
 
   const handleClear = () => {
-    if (!isControlled) setInternalValue("");
-    const syntheticEvent = {
-      target: { value: "" },
-    } as React.ChangeEvent<HTMLInputElement>;
-    onChange?.(syntheticEvent);
+    if (inputRef.current) {
+      inputRef.current.value = "";
+      inputRef.current.focus();
+      setHasValue(false);
+      // Disparar evento synthetic change para listeners
+      const event = new Event("input", { bubbles: true });
+      inputRef.current.dispatchEvent(event);
+    }
   };
 
   return (
@@ -55,15 +59,17 @@ export function Input({
       )}
       <div className={styles.inputWrapper}>
         <input
+          ref={inputRef}
           id={inputId}
           type={actualType}
-          value={isControlled ? controlledValue : internalValue}
+          defaultValue={defaultValue}
+          onInput={handleInput}
           onChange={handleChange}
           className={`${styles.input} ${error ? styles.inputError : ""} ${className}`.trim()}
           {...props}
         />
         <div className={styles.actions}>
-          {clearable && currentValue.length > 0 && (
+          {clearable && hasValue && (
             <button
               type="button"
               className={styles.actionBtn}
