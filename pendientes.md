@@ -52,8 +52,8 @@ Este archivo es la **fuente de la verdad del proyecto**. Cualquier desarrollador
 
 ```text
 [x] Paso 1: Autenticación e Inicio de Sesión Persistente con PIN tipo Yape (COMPLETADO)
-[ ] Paso 2: Shell Base, Sistema de Diseño Móvil (Tokens CSS, Claro/Oscuro, i18n) y Bottom Navigation (SIGUIENTE PASO)
-[ ] Paso 3: Módulo de Inicio (Dinero Disponible + Botones de Acción Rápida)
+[x] Paso 2: Shell Base, Sistema de Diseño Móvil, Bottom Navigation, Claro/Oscuro e i18n (COMPLETADO)
+[ ] Paso 3: Módulo de Inicio (Dinero Disponible + Botones de Acción Rápida) (SIGUIENTE PASO)
 [ ] Paso 4: Módulo de Movimientos (Registro de Ingresos/Gastos e Historial con Filtros)
 [ ] Paso 5: Módulo de Préstamos y Deudas ("Me deben" / "Debo" con Abonos Parciales)
 [ ] Paso 6: Módulo de Ajustes (Cambio de Idioma, Tema, Moneda y Perfil)
@@ -61,19 +61,26 @@ Este archivo es la **fuente de la verdad del proyecto**. Cualquier desarrollador
 
 ---
 
-## 4. Detalle del Paso Actual
+## 4. Detalle de los Pasos Implementados
 
-### ✅ Paso 1: Autenticación e Inicio de Sesión Persistente (Flujo tipo Yape) - COMPLETADO
-* **Estructura implementada:**
-  * Base de datos: Esquema `users` con Drizzle ORM (contraseña y PIN hasheados con bcryptjs).
-  * Sesión: Cookies `HttpOnly` seguras de 30 días con JWT encriptado (`jose`).
-  * Interfaz:
-    * Registro con Nombre, Correo, Contraseña Maestra y creación de PIN de 6 dígitos.
-    * Teclado numérico táctil en pantalla (`PinPad`) tipo Yape para acceso ultrarrápido desde celular.
-    * Alternador para iniciar sesión con contraseña tradicional si el usuario lo prefiere.
-  * Cumplimiento estricto: Todos los archivos de lógica tienen menos de 90 líneas (< 120 líneas) y el CSS es 100% puro sin Tailwind.
+### ✅ Paso 1: Autenticación con PIN tipo Yape y Supabase (COMPLETADO)
+* Base de datos PostgreSQL en Supabase con Drizzle ORM.
+* Flujo de dos pasos: credenciales y creación guiada de PIN de 6 dígitos con teclado táctil `PinPad`.
+* Sesión persistente de 30 días con cookies `HttpOnly` y encriptación ligera `jose`.
+* Componentes de input con ojito para contraseñas, botón `✕` para borrado rápido y mensajes de error directos.
+
+### ✅ Paso 2: Shell Base, Navegación Móvil (BottomNav), Temas e i18n (COMPLETADO)
+* **Bottom Navigation Bar fija:** 4 pestañas accesibles con el pulgar:
+  1. 🏠 **Inicio** (`/`)
+  2. 📄 **Movimientos** (`/movimientos`)
+  3. 🤝 **Préstamos** (`/deudas`)
+  4. ⚙️ **Ajustes** (`/ajustes`)
+* **Gestor de Temas (Claro / Oscuro):** Implementado con `ThemeProvider`, variables CSS semánticas y persistencia en `localStorage`.
+* **Soporte Multi-idioma (i18n):** Diccionarios `es.json` y `en.json` listos para internacionalización.
+* **Layout Móvil:** Safe-area inferior para evitar que la barra tape contenidos en teléfonos Android/iOS.
+* **Cumplimiento estricto:** Todos los archivos respetan el límite de 120 líneas de código y cero Tailwind.
 
 ---
 
-### 📌 Paso 2: Shell Base, Sistema de Diseño Móvil y Bottom Navigation (SIGUIENTE)
-* **Meta:** Implementar el cascarón móvil de la aplicación con la barra de navegación inferior fija (4 pestañas: Inicio, Movimientos, Deudas, Ajustes) y soporte para alternar temas (Claro/Oscuro) e idiomas (ES/EN).
+### 📌 Paso 3: Módulo de Inicio (SIGUIENTE PASO)
+* **Meta:** Implementar el cálculo real del dinero disponible, tarjetas de saldo y los formularios de acción rápida (+ Recibí Dinero / - Hice un Gasto).

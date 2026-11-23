@@ -1,24 +1,22 @@
 import { redirect } from "next/navigation";
-import { getSession, logoutAction } from "@/modules/auth";
+import { getSession } from "@/modules/auth/services/session-service";
+import { logoutAction } from "@/modules/auth/handlers/auth-actions";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export default async function HomePage() {
   const session = await getSession();
-
-  if (!session || !session.userId) {
-    redirect("/login");
-  }
+  if (!session?.userId) redirect("/login");
 
   return (
     <main style={{ padding: "20px 16px", maxWidth: 460, margin: "0 auto" }}>
       <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
         <div>
-          <p style={{ fontSize: 14, color: "var(--color-text-muted)" }}>Bienvenido de nuevo</p>
+          <p style={{ fontSize: 13, color: "var(--color-text-muted)" }}>Bienvenido de nuevo</p>
           <h1 style={{ fontSize: 22, fontWeight: 700 }}>{session.name}</h1>
         </div>
         <form action={logoutAction}>
-          <Button variant="secondary" style={{ width: "auto", minHeight: 38, padding: "8px 14px", fontSize: 14 }}>
+          <Button variant="secondary" style={{ width: "auto", minHeight: 36, padding: "6px 12px", fontSize: 13 }}>
             Salir
           </Button>
         </form>
@@ -39,9 +37,9 @@ export default async function HomePage() {
       </div>
 
       <Card>
-        <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 12 }}>Paso 1: Autenticación Lista</h3>
-        <p style={{ fontSize: 14, color: "var(--color-text-muted)", lineHeight: 1.5 }}>
-          Tu inicio de sesión y registro tipo Yape con PIN de 6 dígitos y persistencia en dispositivo está activo y funcionando.
+        <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>Últimos Movimientos</h3>
+        <p style={{ fontSize: 14, color: "var(--color-text-muted)" }}>
+          Aún no tienes movimientos registrados este mes.
         </p>
       </Card>
     </main>

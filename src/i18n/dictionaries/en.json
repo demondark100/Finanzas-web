@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "home": "Home",
+    "movements": "Activity",
+    "debts": "Loans",
+    "settings": "Settings"
+  },
+  "home": {
+    "greeting": "Welcome back",
+    "availableBalance": "Available balance",
+    "incomeAction": "+ Add Income",
+    "expenseAction": "- Add Expense",
+    "recentMovements": "Recent Activity",
+    "noMovements": "No transactions recorded yet",
+    "logout": "Log out"
+  },
+  "movements": {
+    "title": "Activity",
+    "all": "All",
+    "incomes": "Incomes",
+    "expenses": "Expenses"
+  },
+  "debts": {
+    "title": "Loans & Debts",
+    "receivable": "Owed to me",
+    "payable": "I owe",
+    "newDebt": "+ New Loan"
+  },
+  "settings": {
+    "title": "My Account & Settings",
+    "appearance": "Appearance",
+    "themeLight": "Light Mode",
+    "themeDark": "Dark Mode",
+    "language": "Language",
+    "currency": "Main Currency",
+    "logout": "Log Out"
+  }
+}

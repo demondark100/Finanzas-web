@@ -1,4 +1,4 @@
-import { getSession } from "@/modules/auth";
+import { getSession } from "@/modules/auth/services/session-service";
 import { LoginView } from "@/modules/auth/components/login-view";
 import styles from "@/modules/auth/components/auth.module.css";
 

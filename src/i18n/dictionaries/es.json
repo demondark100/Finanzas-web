@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "movements": "Movimientos",
+    "debts": "Préstamos",
+    "settings": "Ajustes"
+  },
+  "home": {
+    "greeting": "Bienvenido de nuevo",
+    "availableBalance": "Dinero disponible",
+    "incomeAction": "+ Recibí Dinero",
+    "expenseAction": "- Hice un Gasto",
+    "recentMovements": "Últimos Movimientos",
+    "noMovements": "Aún no tienes movimientos registrados",
+    "logout": "Salir"
+  },
+  "movements": {
+    "title": "Movimientos",
+    "all": "Todos",
+    "incomes": "Ingresos",
+    "expenses": "Gastos"
+  },
+  "debts": {
+    "title": "Préstamos y Deudas",
+    "receivable": "Me deben",
+    "payable": "Debo",
+    "newDebt": "+ Nuevo Préstamo"
+  },
+  "settings": {
+    "title": "Mi Cuenta y Ajustes",
+    "appearance": "Apariencia",
+    "themeLight": "Modo Claro",
+    "themeDark": "Modo Oscuro",
+    "language": "Idioma",
+    "currency": "Moneda Principal",
+    "logout": "Cerrar Sesión"
+  }
+}
