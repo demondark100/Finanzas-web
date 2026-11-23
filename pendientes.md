@@ -40,18 +40,19 @@ Este archivo es la **fuente de la verdad del proyecto**. Cualquier desarrollador
 * Textos centralizados en diccionarios (`es.json`, `en.json`) desacoplados de la lógica visual.
 
 ### D. Stack Tecnológico
-* **Framework:** Next.js (App Router, enfoque monolítico con API / Server Actions integradas).
+* **Framework:** Next.js (App Router, enfoque monolítico con Server Actions y API integradas).
 * **Lenguaje:** TypeScript estricto.
-* **Base de Datos:** PostgreSQL.
-* **Estilos:** CSS Puro / CSS Modules con Design Tokens.
+* **Base de Datos y ORM:** PostgreSQL + **Drizzle ORM** (ultrarrápido, modular y ligero).
+* **Autenticación:** Sesión propia segura con cookies HttpOnly y encriptación ligera (sin librerías pesadas externas).
+* **Estilos:** CSS Puro / CSS Modules con Design Tokens centralizados (cero Tailwind).
 
 ---
 
 ## 3. Hoja de Ruta y Estado de los Pendientes
 
 ```text
-[ ] Paso 1: Autenticación e Inicio de Sesión Persistente (EN CURSO)
-[ ] Paso 2: Shell Base, Sistema de Diseño Móvil (Tokens CSS, Claro/Oscuro, i18n) y Bottom Navigation
+[x] Paso 1: Autenticación e Inicio de Sesión Persistente con PIN tipo Yape (COMPLETADO)
+[ ] Paso 2: Shell Base, Sistema de Diseño Móvil (Tokens CSS, Claro/Oscuro, i18n) y Bottom Navigation (SIGUIENTE PASO)
 [ ] Paso 3: Módulo de Inicio (Dinero Disponible + Botones de Acción Rápida)
 [ ] Paso 4: Módulo de Movimientos (Registro de Ingresos/Gastos e Historial con Filtros)
 [ ] Paso 5: Módulo de Préstamos y Deudas ("Me deben" / "Debo" con Abonos Parciales)
@@ -62,11 +63,17 @@ Este archivo es la **fuente de la verdad del proyecto**. Cualquier desarrollador
 
 ## 4. Detalle del Paso Actual
 
-### 📌 Paso 1: Autenticación e Inicio de Sesión Persistente
-* **Meta:** Implementar un sistema de registro e inicio de sesión seguro, simple y persistente (para que el usuario no tenga que iniciar sesión cada vez que entra desde su celular).
-* **Requisitos:**
-  1. Formulario ultra simple (correo y contraseña) con textos claros y botón grande.
-  2. Manejo de sesión persistente segura en cookies HttpOnly.
-  3. Aislamiento total de usuario (`user_id` vinculado a todas sus operaciones).
-  4. Rutas protegidas (si no está logueado, redirige a login; si ya lo está, va directo al Inicio).
-  5. Base extensible para futuras opciones de acceso (OAuth Google, links mágicos, etc.).
+### ✅ Paso 1: Autenticación e Inicio de Sesión Persistente (Flujo tipo Yape) - COMPLETADO
+* **Estructura implementada:**
+  * Base de datos: Esquema `users` con Drizzle ORM (contraseña y PIN hasheados con bcryptjs).
+  * Sesión: Cookies `HttpOnly` seguras de 30 días con JWT encriptado (`jose`).
+  * Interfaz:
+    * Registro con Nombre, Correo, Contraseña Maestra y creación de PIN de 6 dígitos.
+    * Teclado numérico táctil en pantalla (`PinPad`) tipo Yape para acceso ultrarrápido desde celular.
+    * Alternador para iniciar sesión con contraseña tradicional si el usuario lo prefiere.
+  * Cumplimiento estricto: Todos los archivos de lógica tienen menos de 90 líneas (< 120 líneas) y el CSS es 100% puro sin Tailwind.
+
+---
+
+### 📌 Paso 2: Shell Base, Sistema de Diseño Móvil y Bottom Navigation (SIGUIENTE)
+* **Meta:** Implementar el cascarón móvil de la aplicación con la barra de navegación inferior fija (4 pestañas: Inicio, Movimientos, Deudas, Ajustes) y soporte para alternar temas (Claro/Oscuro) e idiomas (ES/EN).

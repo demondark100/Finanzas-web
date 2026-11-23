@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Tokens de Diseño Centralizados (DRY) - Finanzas-web
+   Mobile-First & High Contrast para máxima legibilidad
+   ========================================================================== */
+
+:root {
+  /* Paleta Primaria (Inspirada en finanzas limpias y accesibles) */
+  --color-primary: #0284c7;
+  --color-primary-hover: #0369a1;
+  --color-primary-light: #e0f2fe;
+  --color-primary-contrast: #ffffff;
+
+  /* Superficies y Fondos (Modo Claro) */
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+  --color-surface-card: #ffffff;
+
+  /* Textos y Bordes */
+  --color-text-main: #0f172a;
+  --color-text-muted: #64748b;
+  --color-border: #cbd5e1;
+  --color-border-focus: #0284c7;
+
+  /* Semántica Financiera */
+  --color-income: #16a34a;
+  --color-income-light: #dcfce7;
+  --color-expense: #dc2626;
+  --color-expense-light: #fee2e2;
+  --color-warning: #ea580c;
+  --color-warning-light: #ffedd5;
+
+  /* Radios y Sombras */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+
+  /* Ergonomía táctil */
+  --touch-target-min: 48px;
+  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+[data-theme="dark"] {
+  --color-primary: #38bdf8;
+  --color-primary-hover: #7dd3fc;
+  --color-primary-light: rgba(56, 189, 248, 0.15);
+  --color-primary-contrast: #0f172a;
+
+  --color-bg: #090d16;
+  --color-surface: #131b2e;
+  --color-surface-hover: #1c2742;
+  --color-surface-card: #131b2e;
+
+  --color-text-main: #f8fafc;
+  --color-text-muted: #94a3b8;
+  --color-border: #22304d;
+  --color-border-focus: #38bdf8;
+
+  --color-income: #22c55e;
+  --color-income-light: rgba(34, 197, 94, 0.15);
+  --color-expense: #ef4444;
+  --color-expense-light: rgba(239, 68, 68, 0.15);
+
+  --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+/* Reset Base y Accesibilidad Móvil */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: var(--font-family-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevenir zoom automático molesto en iOS al enfocar inputs */
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: 16px;
+  touch-action: manipulation;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
