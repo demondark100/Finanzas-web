@@ -66,7 +66,10 @@ export function SettingsView({ user }: SettingsViewProps) {
       </Card>
 
       {/* Salir */}
-      <form action={logoutAction}>
+      <form
+        action={logoutAction}
+        onSubmit={() => localStorage.removeItem("finanzas_locked")}
+      >
         <Button variant="secondary" className={styles.logoutBtn}>
           Cerrar Sesión
         </Button>

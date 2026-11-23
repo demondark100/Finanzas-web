@@ -31,8 +31,12 @@ export function LoginPassword() {
     startTransition(async () => {
       try {
         const res = await loginPasswordAction(formData);
-        if (!res.success) setServerError(res.error || "Credenciales incorrectas");
-        else window.location.href = "/";
+        if (!res.success) {
+          setServerError(res.error || "Credenciales incorrectas");
+        } else {
+          localStorage.removeItem("finanzas_locked");
+          window.location.href = "/";
+        }
       } catch (err: unknown) {
         setServerError(err instanceof Error ? err.message : "Error al conectar");
       }

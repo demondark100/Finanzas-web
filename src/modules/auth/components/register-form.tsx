@@ -54,6 +54,7 @@ export function RegisterForm() {
           setServerError(result.error || "Error al registrarse");
           setStep("credentials");
         } else {
+          localStorage.removeItem("finanzas_locked");
           window.location.href = "/";
         }
       } catch (err: unknown) {

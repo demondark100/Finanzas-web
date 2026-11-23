@@ -30,9 +30,11 @@ export function SecurityLock({
   };
 
   useEffect(() => {
-    if (localStorage.getItem("finanzas_locked") === "true") {
+    // Si el servidor determinó que NO está bloqueado (recién inició sesión), limpiamos cualquier residuo
+    if (!initialLocked) {
+      localStorage.removeItem("finanzas_locked");
+    } else {
       setIsLocked(true);
-      lockSessionAction();
     }
 
     const updateActivity = () => { if (!isLocked) lastActiveRef.current = Date.now(); };
