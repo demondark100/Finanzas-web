@@ -10,7 +10,13 @@ const globalForDb = globalThis as unknown as {
   conn: postgres.Sql | undefined;
 };
 
-const client = globalForDb.conn ?? postgres(connectionString);
+const client =
+  globalForDb.conn ??
+  postgres(connectionString, {
+    prepare: false,
+    max: process.env.NODE_ENV === "production" ? 5 : 10,
+    idle_timeout: 20,
+  });
 if (process.env.NODE_ENV !== "production") globalForDb.conn = client;
 
 export const db = drizzle(client, { schema });

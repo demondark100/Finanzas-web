@@ -53,10 +53,10 @@ Este archivo es la **fuente única de la verdad del proyecto**. Cualquier desarr
 ```text
 [x] Paso 1: Autenticación e Inicio de Sesión Persistente con PIN tipo Yape (COMPLETADO)
 [x] Paso 2: Shell Base, Sistema de Diseño Móvil, Bottom Navigation, Claro/Oscuro e i18n (COMPLETADO)
-[ ] Paso 3: Módulo de Inicio (Dinero Disponible Real + Botones de Acción Rápida) (SIGUIENTE PASO)
-[ ] Paso 4: Módulo de Movimientos (Registro de Ingresos/Gastos e Historial con Filtros)
-[ ] Paso 5: Módulo de Préstamos y Deudas ("Me deben" / "Debo" con Abonos Parciales)
-[ ] Paso 6: Módulo de Ajustes (Cambio de Idioma, Tema, Moneda y Perfil)
+[x] Paso 3: Módulo de Inicio (Dinero Disponible Real + Botones de Acción Rápida) (COMPLETADO)
+[x] Paso 4: Módulo de Movimientos (Registro de Ingresos/Gastos e Historial con Filtros) (COMPLETADO)
+[x] Paso 5: Módulo de Préstamos y Deudas ("Me deben" / "Debo" con Abonos Parciales) (COMPLETADO)
+[x] Paso 6: Módulo de Ajustes (Cambio de Idioma, Tema, Moneda y Perfil) (COMPLETADO)
 ```
 
 ---
@@ -85,37 +85,41 @@ Este archivo es la **fuente única de la verdad del proyecto**. Cualquier desarr
 * **Arquitectura i18n:** Diccionarios tipados `es.json` y `en.json`.
 * **Cero estilos en línea:** Se migraron todos los estilos a archivos CSS Modules dedicados (`dashboard.module.css`, `settings.module.css`, `movimientos.module.css`, `deudas.module.css`).
 
+### ✅ Paso 3: Módulo de Inicio (Dinero Disponible Real + Acciones Rápidas) (COMPLETADO)
+* **Base de datos:** Tabla `transactions` creada y sincronizada en Supabase con índice compuesto `(user_id, occurred_at DESC)` y validaciones `CHECK`.
+* **Módulo `src/modules/transactions/`:** Servicio de saldo real y resumen mensual (`availableBalance`, `monthlyIncome`, `monthlyExpense`), últimos 5 movimientos y Server Actions (`addIncomeAction`, `addExpenseAction`).
+* **UI Móvil:** Tarjeta de saldo real con resumen mensual sutil, *Bottom Sheet* rápido (`Modal` + `Toast`) con teclado numérico directo, chips de 1 toque y concepto opcional por defecto.
+
+### ✅ Paso 4: Módulo de Movimientos + Calendario Reutilizable (COMPLETADO)
+* **Componente Universal `Calendar` & `DatePicker` (`src/components/ui/calendar/`):** Arquitectura modular SOLID (< 120 líneas), modos `single` / `range` / `multiple`, presets, marcadores, selector de mes/año y `README.md`.
+* **Historial `/movimientos`:** Filtros por tipo (`Todos`, `Ingresos`, `Gastos`), períodos rápidos + rango personalizado con calendario, búsqueda instantánea por texto, acciones rápidas `+ Recibí` / `- Gasté` y edición/eliminación con confirmación.
+
+### ✅ Paso 5: Módulo de Préstamos y Deudas Centrado en Personas (COMPLETADO)
+* **Base de datos (`src/lib/db/schema/debts.ts`):** Tablas `debt_contacts` y `debt_entries` con enlace opcional a `transactions`.
+* **Interfaz:** Resumen global + lista por persona (`/deudas`) y contexto exclusivo por persona (`/deudas/[id]`) con 4 acciones (`Le presté`, `Me abonó`, `Me prestó`, `Le aboné`).
+
+### ✅ Paso 6: Módulo de Ajustes, i18n Global y Modernización UI/UX (COMPLETADO)
+* **Preferencias reales en Supabase:** Nombre de perfil, idioma (`es`/`en` global en toda la app), moneda (`PEN`/`USD`/`EUR`), tema (`light`/`dark`), cambio de PIN con `PinPad` y bloqueo inmediato.
+* **Modernización Fintech (Fases 1–3):** Iconografía SVG `lucide-react`, `BottomNav` Material 3, portada Wallet con privacidad (`S/. ••••`), movimientos agrupados por fecha y pulido de `Calendar`, `/deudas` y `/ajustes`.
+
 ---
 
-## 5. Próximo Paso Inmediato para el Nuevo Chat
+## 5. Próximo Paso Inmediato
 
-### 📌 Paso 3: Módulo de Inicio (Dinero Disponible Real + Acciones Rápidas)
+### 📌 Paso 5: Módulo de Préstamos y Deudas ("Me deben" / "Debo" con Abonos Parciales)
 
-**Objetivo:** Hacer que la pantalla principal muestre el saldo real del usuario y permita registrar ingresos y gastos con 1 solo toque.
+**Objetivo:** Darle vida a `/deudas` para llevar el control claro de quién te debe o a quién le debes, cuánto falta por pagar/cobrar, fechas opcionales (usando nuestro `DatePicker`) y registro de abonos parciales hasta quedar saldado.
 
-**Tareas a ejecutar en el Paso 3:**
-1. **Esquema de Base de Datos para Transacciones:**
-   * Crear la tabla `transactions` en `src/lib/db/schema/transactions.ts`:
-     * `id`: uuid primary key
-     * `userId`: uuid (foreign key a `users.id`)
-     * `type`: enum o text (`INCOME` / `EXPENSE`)
-     * `amount`: numeric / decimal no nulo
-     * `concept`: text no nulo (lenguaje cotidiano: *"Sueldo"*, *"Almuerzo"*, *"Luz"*)
-     * `category`: text (opcional o icono sugerido)
-     * `date`: date / timestamp (por defecto hoy)
-     * `createdAt`: timestamp
-   * Correr `npx drizzle-kit push --force` para sincronizar la tabla con Supabase.
-2. **Servicio y Server Actions de Transacciones (`src/modules/transactions/`):**
-   * Estructura modular (< 120 líneas por archivo):
-     * `services/transaction-service.ts`: Consultas de saldo actual (`sum(incomes) - sum(expenses)`) y últimos 5 movimientos del usuario.
-     * `handlers/transaction-actions.ts`: Server actions `addIncomeAction` y `addExpenseAction`.
-3. **Modales / Bottom Sheets Rápidos (Mobile First):**
-   * Modal `+ Recibí Dinero`: Monto grande + ¿De qué fue? + Botón "Guardar Ingreso".
-   * Modal `- Hice un Gasto`: Monto grande + ¿En qué gastaste? + Botón "Guardar Gasto".
-4. **Tarjeta de Saldo Dinámica:**
-   * Mostrar el dinero disponible real calculado desde la base de datos con formato de moneda (`S/. 1,250.00`).
-5. **Lista de Últimos Movimientos:**
-   * Renderizar en la tarjeta de inicio los últimos 3 a 5 movimientos con su monto en verde/rojo y fecha.
+**Tareas a diseñar y validar en el Paso 5:**
+1. **Esquema de Base de Datos (`debts` y `debt_payments`):**
+   * Tabla `debts`: `id`, `userId`, `direction` (`RECEIVABLE` = me deben / `PAYABLE` = debo), `personName`, `totalAmount`, `paidAmount` (o calculado + abonos), `note`, `dueDate` (opcional), `status` (`PENDING` / `PAID`), `createdAt`.
+   * Tabla `debt_payments`: historial de abonos parciales (`id`, `debtId`, `userId`, `amount`, `note`, `paidAt`).
+2. **Módulo `src/modules/debts/` (< 120 líneas por archivo):**
+   * Servicios para listar, crear, editar/eliminar deuda y registrar abonos parciales (actualizando el estado a `PAID` automáticamente al completar el total).
+   * Server Actions seguras verificando sesión y propietario.
+3. **Interfaz Mobile-First en `/deudas`:**
+   * Resumen superior (*Total por cobrar* / *Total por pagar*), pestañas `Me deben` / `Debo` y filtro opcional de pendientes/saldados.
+   * Tarjetas con barra de progreso visual, monto restante destacado, fecha límite opcional y botones de 1 toque para **Registrar abono** o **Marcar saldado**.
 
 ---
 

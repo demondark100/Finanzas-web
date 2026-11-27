@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { KeyRound } from "lucide-react";
 import { PinPad } from "@/components/ui/pin-pad";
 import { Button } from "@/components/ui/button";
 import styles from "./auth.module.css";
@@ -37,7 +38,9 @@ export function RegisterPinStep({ onComplete, onBack, isPending }: RegisterPinSt
   return (
     <div>
       <div className={styles.brandHeader}>
-        <div className={styles.brandIcon}>🔑</div>
+        <div className={styles.brandIcon}>
+          <KeyRound size={26} strokeWidth={2.2} />
+        </div>
         <h2 className={styles.title}>
           {isConfirming ? "Confirma tu PIN" : "Crea tu PIN de 6 Números"}
         </h2>

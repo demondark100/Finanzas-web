@@ -21,9 +21,9 @@
   width: 60px;
   height: 60px;
   border-radius: var(--radius-lg);
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
-  font-size: 32px;
+  background: var(--color-brand-gradient);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.28);
   margin-bottom: 12px;
 }
 

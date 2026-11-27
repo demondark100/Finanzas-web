@@ -1,0 +1,51 @@
+.topBar { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.backBtn {
+  min-height: 38px; padding: 6px 12px; border-radius: var(--radius-md);
+  background-color: var(--color-surface); border: 1px solid var(--color-border);
+  font-size: 14px; font-weight: 600; color: var(--color-text-main);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.topTitle { font-size: 15px; font-weight: 600; color: var(--color-text-muted); }
+
+.mainSurface {
+  background: transparent;
+  border: none;
+  padding: 12px 4px 16px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.typePill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: var(--radius-full);
+  font-size: 13px; font-weight: 700; margin-bottom: 10px;
+}
+.pillIn { background-color: var(--color-income-light); color: var(--color-income); }
+.pillOut { background-color: var(--color-expense-light); color: var(--color-expense); }
+
+.heroAmount { font-size: 34px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 20px; }
+.positive { color: var(--color-income); }
+.negative { color: var(--color-expense); }
+
+.detailsList { background: transparent; border-top: 1px solid var(--color-border); text-align: left; }
+.detailRow {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--color-border);
+}
+.detailRow:last-child { border-bottom: none; }
+.rowLabel { font-size: 13px; color: var(--color-text-muted); flex-shrink: 0; }
+.rowValue { font-size: 14px; font-weight: 600; color: var(--color-text-main); text-align: right; word-break: break-word; }
+
+.subtleActions { display: flex; justify-content: center; gap: 12px; }
+.subtleBtn, .subtleDangerBtn {
+  min-height: 40px; padding: 8px 16px; border-radius: var(--radius-full);
+  font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;
+  background-color: var(--color-surface); border: 1px solid var(--color-border);
+}
+.subtleBtn { color: var(--color-text-muted); }
+.subtleDangerBtn { color: var(--color-expense); }
+
+.confirmCard { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.confirmText { font-size: 14px; font-weight: 600; color: var(--color-expense); text-align: center; }
+.confirmActions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dangerBtn { background-color: var(--color-expense) !important; color: #ffffff !important; }

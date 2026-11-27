@@ -1,0 +1,74 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.title { font-size: 24px; font-weight: 700; color: var(--color-text-main); }
+.subtitle { font-size: 13px; color: var(--color-text-muted); margin-top: 2px; }
+.addBtn { width: auto !important; min-height: 42px !important; padding: 8px 14px !important; font-size: 14px !important; }
+
+.globalCard { padding: 18px 16px; text-align: center; margin-bottom: 16px; }
+.globalHint { display: block; font-size: 12px; font-weight: 600; color: var(--color-text-muted); margin-bottom: 4px; }
+.globalNet { font-size: 30px; font-weight: 800; letter-spacing: -0.5px; }
+.globalBar {
+  width: 100%; height: 7px; margin: 12px 0; border-radius: var(--radius-full);
+  appearance: none; -webkit-appearance: none; border: none; overflow: hidden;
+  background-color: var(--color-expense-light);
+}
+.globalBar::-webkit-progress-bar { background-color: var(--color-expense-light); border-radius: var(--radius-full); }
+.globalBar::-webkit-progress-value { background-color: var(--color-income); border-radius: var(--radius-full); }
+.globalBar::-moz-progress-bar { background-color: var(--color-income); border-radius: var(--radius-full); }
+
+.totalsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.totalBox { padding: 10px 8px; border-radius: var(--radius-md); background-color: var(--color-bg); text-align: center; }
+.totalLabel { display: block; font-size: 12px; color: var(--color-text-muted); margin-bottom: 4px; }
+.receivableVal { font-size: 18px; font-weight: 800; color: var(--color-income); }
+.payableVal { font-size: 18px; font-weight: 800; color: var(--color-expense); }
+.neutralVal { font-size: 18px; font-weight: 800; color: var(--color-text-muted); }
+.receivableAmt { color: var(--color-income); }
+.payableAmt { color: var(--color-expense); }
+.settledVal { font-size: 13px; font-weight: 600; color: var(--color-text-muted); }
+
+.controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.chipsRow { display: flex; gap: 6px; overflow-x: auto; }
+.chip, .chipActive { min-height: 38px; padding: 6px 12px; border-radius: var(--radius-full); font-size: 13px; font-weight: 600; white-space: nowrap; }
+.chip { background-color: var(--color-surface); color: var(--color-text-muted); border: 1px solid var(--color-border); }
+.chipActive { background-color: var(--color-primary); color: var(--color-primary-contrast); border: 1px solid var(--color-primary); }
+
+.list { display: flex; flex-direction: column; gap: 10px; }
+.personCard {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 16px; border-radius: var(--radius-lg);
+  background-color: var(--color-surface-card); border: 1px solid var(--color-border);
+}
+.personCard:active { transform: scale(0.99); }
+.personLeft { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.avatar {
+  width: 42px; height: 42px; border-radius: var(--radius-full);
+  background-color: var(--color-surface-hover); color: var(--color-text-main);
+  display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;
+}
+.avatarIn { background-color: var(--color-income-light); color: var(--color-income); }
+.avatarOut { background-color: var(--color-expense-light); color: var(--color-expense); }
+.personMeta { display: flex; flex-direction: column; min-width: 0; }
+.personName { font-size: 16px; font-weight: 700; color: var(--color-text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.personNote { font-size: 12px; color: var(--color-text-muted); }
+.personRight { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.balanceStack { display: flex; flex-direction: column; align-items: flex-end; }
+.balanceHint { font-size: 11px; color: var(--color-text-muted); font-weight: 500; }
+.personBalance { font-size: 15px; font-weight: 700; }
+.chevron { font-size: 20px; color: var(--color-text-muted); }
+
+.emptyCard { text-align: center; padding: 32px 16px; }
+.emptyIcon { font-size: 36px; margin-bottom: 8px; }
+.emptyTitle { font-size: 16px; font-weight: 600; margin-bottom: 6px; color: var(--color-text-main); }
+.emptyDesc { font-size: 14px; color: var(--color-text-muted); line-height: 1.4; }

@@ -1,0 +1,102 @@
+.walletCard {
+  background: var(--wallet-gradient);
+  color: #ffffff;
+  border-radius: 22px;
+  padding: 20px 18px 16px;
+  margin-bottom: 18px;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.22);
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.currencyBadge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 3px 9px;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.amount {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.6px;
+  color: #ffffff;
+  margin-bottom: 18px;
+}
+
+.amountNegative { color: #fca5a5; }
+
+.strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.stripItem {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.stripDivider {
+  width: 1px;
+  height: 28px;
+  background-color: rgba(255, 255, 255, 0.18);
+  flex-shrink: 0;
+}
+
+.pillIn,
+.pillOut {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pillIn { background-color: rgba(34, 197, 94, 0.22); color: #86efac; }
+.pillOut { background-color: rgba(239, 68, 68, 0.22); color: #fca5a5; }
+
+.stripMeta { display: flex; flex-direction: column; min-width: 0; }
+.stripLabel { font-size: 11px; color: rgba(255, 255, 255, 0.75); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.incomeValue { font-size: 14px; font-weight: 700; color: #86efac; }
+.expenseValue { font-size: 14px; font-weight: 700; color: #fca5a5; }
+
+.loansStrip {
+  margin-top: 10px;
+  padding: 9px 12px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px 10px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.loansLeft { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.netWorthText { font-weight: 700; color: #ffffff; }

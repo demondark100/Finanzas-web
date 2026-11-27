@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { getDictionary } from "@/i18n";
+import { getUserLocale } from "@/i18n/server-locale";
 import { getSession } from "@/modules/auth/services/session-service";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { SecurityLock } from "@/modules/auth/components/security-lock";
@@ -18,6 +20,8 @@ export default async function DashboardLayout({
 
   const cookieStore = await cookies();
   const isLocked = cookieStore.get("finanzas_locked")?.value === "true";
+  const locale = await getUserLocale(session.userId);
+  const dict = getDictionary(locale);
 
   return (
     <div className={styles.layoutContainer}>
@@ -27,7 +31,7 @@ export default async function DashboardLayout({
           <div className={styles.contentWrapper}>
             {children}
           </div>
-          <BottomNav />
+          <BottomNav labels={dict.nav} />
         </>
       )}
     </div>

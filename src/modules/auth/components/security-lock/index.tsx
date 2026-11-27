@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useTransition } from "react";
+import { Lock } from "lucide-react";
 import { PinPad } from "@/components/ui/pin-pad";
 import { loginPinAction, logoutAction, lockSessionAction } from "../../handlers/auth-actions";
 import styles from "./security-lock.module.css";
@@ -30,13 +31,15 @@ export function SecurityLock({
   };
 
   useEffect(() => {
-    // Si el servidor determinó que NO está bloqueado (recién inició sesión), limpiamos cualquier residuo
-    if (!initialLocked) {
-      localStorage.removeItem("finanzas_locked");
-    } else {
+    if (initialLocked) {
       setIsLocked(true);
+      localStorage.setItem("finanzas_locked", "true");
+    } else {
+      localStorage.removeItem("finanzas_locked");
     }
+  }, [initialLocked]);
 
+  useEffect(() => {
     const updateActivity = () => { if (!isLocked) lastActiveRef.current = Date.now(); };
     const checkTimeout = () => {
       if (!isLocked && Date.now() - lastActiveRef.current >= timeoutMs) triggerLock();
@@ -49,11 +52,13 @@ export function SecurityLock({
 
     const events = ["mousedown", "touchstart", "keydown", "scroll"];
     events.forEach((ev) => window.addEventListener(ev, updateActivity, { passive: true }));
+    window.addEventListener("finanzas:lock", triggerLock);
     document.addEventListener("visibilitychange", handleVisibility);
     const interval = setInterval(checkTimeout, 5000);
 
     return () => {
       events.forEach((ev) => window.removeEventListener(ev, updateActivity));
+      window.removeEventListener("finanzas:lock", triggerLock);
       document.removeEventListener("visibilitychange", handleVisibility);
       clearInterval(interval);
     };
@@ -86,7 +91,9 @@ export function SecurityLock({
   return (
     <div className={styles.lockOverlay}>
       <div className={styles.lockCard}>
-        <div className={styles.iconWrapper}>🔒</div>
+        <div className={styles.iconWrapper}>
+          <Lock size={26} strokeWidth={2.2} />
+        </div>
         <h2 className={styles.title}>¡Hola, {userName}!</h2>
         <p className={styles.subtitle}>Escribe tu PIN de 6 dígitos para continuar</p>
 

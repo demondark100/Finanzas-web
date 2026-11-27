@@ -86,3 +86,10 @@
   cursor: pointer;
   text-decoration: underline;
 }
+
+@media (min-width: 600px) {
+  .lockCard { max-width: 330px; padding: 22px 20px; }
+  .iconWrapper { width: 52px; height: 52px; margin-bottom: 10px; }
+  .title { font-size: 19px; }
+  .subtitle { font-size: 13px; margin-bottom: 14px; }
+}

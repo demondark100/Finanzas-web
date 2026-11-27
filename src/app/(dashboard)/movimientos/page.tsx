@@ -1,33 +1,62 @@
-import { Card } from "@/components/ui/card";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { getDictionary } from "@/i18n";
+import { getUserLocale } from "@/i18n/server-locale";
+import { getSession } from "@/modules/auth/services/session-service";
+import { MovementsView, type MovementPeriod } from "@/modules/transactions";
+import { getMovementsHistory } from "@/modules/transactions/services/transaction-history-service";
 import styles from "./movimientos.module.css";
 
 export const metadata = {
   title: "Movimientos | Finanzas-web",
 };
 
-export default function MovimientosPage() {
+function parsePeriod(raw?: string, hasCustomDates?: boolean): MovementPeriod {
+  if (raw === "last_month" || raw === "all") return raw;
+  if (raw === "custom" && hasCustomDates) return "custom";
+  return "this_month";
+}
+
+export default async function MovimientosPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ period?: string; from?: string; to?: string; loans?: string }>;
+}) {
+  const session = await getSession();
+  if (!session?.userId) redirect("/login");
+
+  const cookieStore = await cookies();
+  if (cookieStore.get("finanzas_locked")?.value === "true") {
+    return null;
+  }
+
+  const params = await searchParams;
+  const hasCustomDates = Boolean(params.from && params.to);
+  const period = parsePeriod(params.period, hasCustomDates);
+  const includeLoans = params.loans === "1";
+  const customRangeInput =
+    period === "custom" ? { from: params.from, to: params.to } : undefined;
+  const locale = await getUserLocale(session.userId);
+  const dict = getDictionary(locale);
+  const { items, currency } = await getMovementsHistory(
+    session.userId,
+    period,
+    customRangeInput,
+    includeLoans
+  );
+
   return (
     <main className={styles.pageContainer}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Movimientos</h1>
-        <p className={styles.subtitle}>
-          Historial de todos tus gastos e ingresos
-        </p>
-      </header>
-
-      <div className={styles.filterChips}>
-        <button className={styles.chipActive}>Todos</button>
-        <button className={styles.chip}>Ingresos</button>
-        <button className={styles.chip}>Gastos</button>
-      </div>
-
-      <Card className={styles.emptyCard}>
-        <div className={styles.emptyIcon}>📄</div>
-        <h3 className={styles.emptyTitle}>Sin movimientos aún</h3>
-        <p className={styles.emptyDesc}>
-          Cuando anotes ingresos o gastos aparecerán aquí ordenados por fecha.
-        </p>
-      </Card>
+      <MovementsView
+        items={items}
+        currency={currency}
+        period={period}
+        includeLoans={includeLoans}
+        customRangeInput={customRangeInput}
+        locale={locale}
+        labels={dict.movements}
+        homeLabels={dict.home}
+      />
     </main>
   );
 }

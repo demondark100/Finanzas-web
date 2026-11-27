@@ -1,0 +1,57 @@
+.topBar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.backBtn, .editBtn {
+  min-height: 40px; padding: 6px 12px; border-radius: var(--radius-md);
+  background-color: var(--color-surface); border: 1px solid var(--color-border);
+  font-size: 14px; font-weight: 600; color: var(--color-text-main);
+  display: inline-flex; align-items: center; gap: 6px;
+}
+
+.actionsGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.actionBtn {
+  min-height: 48px; padding: 10px 12px; border-radius: var(--radius-md);
+  font-size: 14px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+.btnLent { background-color: var(--color-income-light); color: var(--color-income); }
+.btnPayIn { background-color: var(--color-primary-light); color: var(--color-primary); }
+.btnBorrowed { background-color: var(--color-expense-light); color: var(--color-expense); }
+.btnPayOut { background-color: var(--color-warning-light); color: var(--color-warning); }
+
+.filterSection { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.periodRow { display: flex; gap: 8px; }
+.periodBtn, .periodActive { min-height: 36px; padding: 6px 14px; border-radius: var(--radius-full); font-size: 13px; font-weight: 600; }
+.periodBtn { background-color: var(--color-surface-hover); color: var(--color-text-muted); }
+.periodActive { background-color: var(--color-primary-light); color: var(--color-primary); border: 1px solid var(--color-primary); }
+
+.historyHeader { display: flex; justify-content: space-between; align-items: center; margin: 0 4px 8px; }
+.historyTitle { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--color-text-muted); }
+.sumBtn, .sumBtnActive {
+  min-height: 32px; padding: 4px 10px; border-radius: var(--radius-full);
+  font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;
+}
+.sumBtn { background-color: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text-main); }
+.sumBtnActive { background-color: var(--color-primary-light); border: 1px solid var(--color-primary); color: var(--color-primary); }
+
+.historyCard { padding: 6px 16px; }
+.emptyText { padding: 18px 4px; font-size: 14px; color: var(--color-text-muted); text-align: center; }
+
+.entryRow {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 12px 0; border-top: 1px solid var(--color-border); text-align: left;
+}
+.entryRow:first-child { border-top: none; }
+.rowSelected { background-color: var(--color-primary-light); border-radius: var(--radius-md); padding-left: 8px; padding-right: 8px; }
+
+.entryLeft { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.entryBadge { width: 34px; height: 34px; border-radius: var(--radius-full); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.badgeIn { background-color: var(--color-income-light); color: var(--color-income); }
+.badgeOut { background-color: var(--color-expense-light); color: var(--color-expense); }
+.checkCircle { width: 26px; height: 26px; border-radius: var(--radius-full); border: 2px solid var(--color-border); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.checkSelected { background-color: var(--color-primary); border-color: var(--color-primary); color: var(--color-primary-contrast); }
+
+.entryMeta { display: flex; flex-direction: column; min-width: 0; }
+.entryKind { font-size: 15px; font-weight: 700; color: var(--color-text-main); }
+.entryNote { font-size: 13px; color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.entryDate { font-size: 12px; color: var(--color-text-muted); margin-top: 2px; display: inline-flex; align-items: center; gap: 4px; }
+.entryAmount { font-size: 15px; font-weight: 800; white-space: nowrap; flex-shrink: 0; }
+.positive { color: var(--color-income); }
+.negative { color: var(--color-expense); }

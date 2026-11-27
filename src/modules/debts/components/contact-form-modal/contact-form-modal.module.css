@@ -1,0 +1,50 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.errorText {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-expense);
+  text-align: center;
+}
+
+.deleteLink {
+  min-height: 44px;
+  color: var(--color-expense);
+  font-size: 15px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.confirmBox {
+  padding: 12px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-expense-light);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.confirmText {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-expense);
+  text-align: center;
+}
+
+.confirmActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.confirmDangerBtn {
+  background-color: var(--color-expense) !important;
+  color: #ffffff !important;
+}

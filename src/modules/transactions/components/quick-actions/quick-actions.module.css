@@ -1,0 +1,45 @@
+.actionsGridTwo,
+.actionsGridThree {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.actionsGridTwo { grid-template-columns: repeat(2, 1fr); }
+.actionsGridThree { grid-template-columns: repeat(3, 1fr); }
+
+.actionTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 76px;
+  padding: 12px 8px;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.12s ease, background-color 0.15s ease;
+}
+
+.actionTile:active { transform: scale(0.97); }
+
+.iconCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconIncome { background-color: var(--color-income-light); color: var(--color-income); }
+.iconExpense { background-color: var(--color-expense-light); color: var(--color-expense); }
+.iconLoans { background-color: var(--color-primary-light); color: var(--color-primary); }
+
+.tileLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-main);
+}

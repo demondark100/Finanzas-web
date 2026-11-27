@@ -3,41 +3,40 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ArrowLeftRight, Home, Settings, Users } from "lucide-react";
+import type { Dictionary } from "@/i18n";
 import styles from "./bottom-nav.module.css";
 
-interface NavItem {
-  href: string;
-  label: string;
-  icon: string;
+interface BottomNavProps {
+  labels?: Dictionary["nav"];
 }
 
-const NAV_ITEMS: NavItem[] = [
-  { href: "/", label: "Inicio", icon: "🏠" },
-  { href: "/movimientos", label: "Movimientos", icon: "📄" },
-  { href: "/deudas", label: "Préstamos", icon: "🤝" },
-  { href: "/ajustes", label: "Ajustes", icon: "⚙️" },
-];
-
-export function BottomNav() {
+export function BottomNav({ labels }: BottomNavProps) {
   const pathname = usePathname();
+
+  const navItems = [
+    { href: "/", label: labels?.home ?? "Inicio", Icon: Home },
+    { href: "/movimientos", label: labels?.movements ?? "Movimientos", Icon: ArrowLeftRight },
+    { href: "/deudas", label: labels?.debts ?? "Préstamos", Icon: Users },
+    { href: "/ajustes", label: labels?.settings ?? "Ajustes", Icon: Settings },
+  ];
 
   return (
     <nav className={styles.bottomNav} aria-label="Navegación principal">
-      {NAV_ITEMS.map((item) => {
-        const isActive =
-          item.href === "/"
-            ? pathname === "/"
-            : pathname.startsWith(item.href);
+      {navItems.map(({ href, label, Icon }) => {
+        const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
 
         return (
           <Link
-            key={item.href}
-            href={item.href}
+            key={href}
+            href={href}
             className={`${styles.navItem} ${isActive ? styles.active : ""}`}
             aria-current={isActive ? "page" : undefined}
           >
-            <span className={styles.icon}>{item.icon}</span>
-            <span className={styles.label}>{item.label}</span>
+            <span className={styles.iconPill}>
+              <Icon size={20} strokeWidth={isActive ? 2.4 : 1.9} />
+            </span>
+            <span className={styles.label}>{label}</span>
           </Link>
         );
       })}

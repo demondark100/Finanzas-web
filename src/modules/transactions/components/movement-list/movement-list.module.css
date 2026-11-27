@@ -1,0 +1,160 @@
+.groupsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dateGroupTitle {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--color-text-muted);
+  margin: 0 0 6px 4px;
+}
+
+.listCard {
+  padding: 6px 16px;
+}
+
+.rowBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 0;
+  border-top: 1px solid var(--color-border);
+  text-align: left;
+  transition: opacity 0.12s ease;
+}
+
+.rowBtn:first-child {
+  border-top: none;
+}
+
+.rowBtn:active {
+  opacity: 0.7;
+}
+
+.rowSelected {
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.checkCircle {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.checkSelected {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+}
+
+.loanTag {
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.leftGroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.badge {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.badgeIncome {
+  background-color: var(--color-income-light);
+  color: var(--color-income);
+}
+
+.badgeExpense {
+  background-color: var(--color-expense-light);
+  color: var(--color-expense);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.concept {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.date {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.amount {
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.positive {
+  color: var(--color-income);
+}
+
+.negative {
+  color: var(--color-expense);
+}
+
+.emptyCard {
+  text-align: center;
+  padding: 32px 16px;
+}
+
+.emptyIcon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--color-text-main);
+}
+
+.emptyDesc {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}

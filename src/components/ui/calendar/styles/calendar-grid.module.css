@@ -1,0 +1,104 @@
+.gridWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.weekdaysRow {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
+
+.weekday {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  padding: 4px 0;
+}
+
+.daysGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 4px;
+}
+
+.cellWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.inRange {
+  background-color: var(--color-primary-light);
+}
+
+.rangeStart {
+  background: linear-gradient(90deg, transparent 50%, var(--color-primary-light) 50%);
+}
+
+.rangeEnd {
+  background: linear-gradient(90deg, var(--color-primary-light) 50%, transparent 50%);
+}
+
+.dayBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background-color 0.14s ease, color 0.14s ease, transform 0.1s ease;
+}
+
+.dayBtn:hover:not(:disabled):not(.selected) {
+  background-color: var(--color-surface-hover);
+}
+
+.dayBtn:active:not(:disabled) {
+  transform: scale(0.93);
+}
+
+.dayBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.outsideMonth {
+  color: var(--color-text-muted);
+  opacity: 0.45;
+}
+
+.today:not(.selected) {
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.selected {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrast);
+  opacity: 1;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  position: absolute;
+  bottom: 4px;
+}
+
+.dot_primary { background-color: var(--color-primary); }
+.dot_income { background-color: var(--color-income); }
+.dot_expense { background-color: var(--color-expense); }
+.dot_warning { background-color: var(--color-warning); }
+
+.selected .dot {
+  background-color: var(--color-primary-contrast);
+}

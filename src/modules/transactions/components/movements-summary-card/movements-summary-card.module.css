@@ -1,0 +1,65 @@
+.card {
+  padding: 18px 16px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.headline {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: 4px;
+}
+
+.heroAmount {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.positive { color: var(--color-income); }
+.negative { color: var(--color-expense); }
+
+.ratioBar {
+  width: 100%;
+  height: 8px;
+  margin: 14px 0 12px;
+  border-radius: var(--radius-full);
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  overflow: hidden;
+  background-color: var(--color-expense-light);
+}
+
+.ratioBar::-webkit-progress-bar { background-color: var(--color-expense-light); border-radius: var(--radius-full); }
+.ratioBar::-webkit-progress-value { background-color: var(--color-income); border-radius: var(--radius-full); }
+.ratioBar::-moz-progress-bar { background-color: var(--color-income); border-radius: var(--radius-full); }
+
+.splitRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.splitBox {
+  padding: 10px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 14px;
+}
+
+.splitLabelIn, .splitLabelOut {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.splitLabelIn { color: var(--color-income); }
+.splitLabelOut { color: var(--color-expense); }

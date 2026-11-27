@@ -62,6 +62,9 @@ export async function loginPasswordAction(formData: FormData): Promise<AuthActio
 export async function lockSessionAction(): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.set("finanzas_locked", "true", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
     path: "/",
     maxAge: 30 * 24 * 60 * 60,
   });

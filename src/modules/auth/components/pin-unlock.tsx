@@ -2,6 +2,7 @@
 
 import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
+import { Lock } from "lucide-react";
 import { PinPad } from "@/components/ui/pin-pad";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -40,7 +41,9 @@ export function PinUnlock({ userName, onUsePassword }: PinUnlockProps) {
   return (
     <Card>
       <div className={styles.brandHeader}>
-        <div className={styles.brandIcon}>🔒</div>
+        <div className={styles.brandIcon}>
+          <Lock size={26} strokeWidth={2.2} />
+        </div>
         <h2 className={styles.title}>{userName ? `¡Hola, ${userName}!` : "Ingresa tu PIN"}</h2>
         <p className={styles.subtitle}>Escribe tus 6 dígitos para entrar</p>
       </div>

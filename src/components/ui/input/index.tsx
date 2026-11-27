@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import { Eye, EyeOff, X } from "lucide-react";
 import styles from "./input.module.css";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -76,7 +77,7 @@ export function Input({
               onClick={handleClear}
               aria-label="Borrar texto"
             >
-              ✕
+              <X size={16} />
             </button>
           )}
           {isPassword && (
@@ -86,7 +87,7 @@ export function Input({
               onClick={() => setShowPassword((prev) => !prev)}
               aria-label={showPassword ? "Ocultar contraseña" : "Ver contraseña"}
             >
-              {showPassword ? "🙈" : "👁️"}
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           )}
         </div>
