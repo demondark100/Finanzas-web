@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "src/app/api/schedules/due-reminders/route.ts": {
+      "experimentalTriggers": [{ "type": "schedule/v1beta" }]
+    }
+  },
+  "schedules": {
+    "due-reminders": {
+      "schedule": "0 9 * * *",
+      "timezone": "America/Lima",
+      "function": "api/schedules/due-reminders"
+    }
+  }
+}

@@ -43,6 +43,7 @@ export default async function AjustesPage() {
         user={userSettings}
         rates={rates}
         labels={dict.settings}
+        notifLabels={dict.notifications}
         savingText={dict.home.saving}
       />
     </main>

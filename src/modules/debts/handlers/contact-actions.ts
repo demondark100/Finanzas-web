@@ -68,6 +68,7 @@ export async function deleteContactAction(id: string): Promise<DebtActionResult>
     if (!ok) return { success: false, error: "No se encontró la persona" };
 
     revalidatePath("/deudas");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (err: unknown) {
     return { success: false, error: err instanceof Error ? err.message : "No se pudo eliminar" };

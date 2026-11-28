@@ -20,7 +20,7 @@ import type { DebtActionResult } from "../types";
 function revalidateDebtPaths(contactId: string) {
   revalidatePath("/deudas");
   revalidatePath(`/deudas/${contactId}`);
-  revalidatePath("/");
+  revalidatePath("/", "layout");
 }
 
 export async function addDebtEntryAction(formData: FormData): Promise<DebtActionResult> {

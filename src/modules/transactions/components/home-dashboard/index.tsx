@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import type { Dictionary, Locale } from "@/i18n";
+import { DueAlertBanner } from "@/modules/notifications";
 import type { BalanceSummary, TransactionItem } from "../../types";
 import { BalanceCard } from "../balance-card";
 import { HomeHeader } from "../home-header";
@@ -17,6 +18,7 @@ interface HomeDashboardProps {
   currency: string;
   locale: Locale;
   labels: Dictionary["home"];
+  notifLabels?: Dictionary["notifications"];
 }
 
 export function HomeDashboard({
@@ -26,6 +28,7 @@ export function HomeDashboard({
   currency,
   locale,
   labels,
+  notifLabels,
 }: HomeDashboardProps) {
   const [hideAmounts, setHideAmounts] = useState(false);
 
@@ -47,8 +50,11 @@ export function HomeDashboard({
         userName={userName}
         hideAmounts={hideAmounts}
         labels={labels}
+        bellLabel={notifLabels?.bellLabel}
         onTogglePrivacy={handleTogglePrivacy}
       />
+
+      {notifLabels && <DueAlertBanner labels={notifLabels} />}
 
       <BalanceCard
         summary={summary}

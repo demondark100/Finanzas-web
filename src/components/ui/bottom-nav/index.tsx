@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowLeftRight, Home, Settings, Users } from "lucide-react";
 import type { Dictionary } from "@/i18n";
+import { useNotifications } from "@/modules/notifications";
 import styles from "./bottom-nav.module.css";
 
 interface BottomNavProps {
@@ -13,6 +14,9 @@ interface BottomNavProps {
 
 export function BottomNav({ labels }: BottomNavProps) {
   const pathname = usePathname();
+  const notif = useNotifications();
+  const alertCount = notif?.totalCount ?? 0;
+  const hasUrgent = (notif?.urgentCount ?? 0) > 0;
 
   const navItems = [
     { href: "/", label: labels?.home ?? "Inicio", Icon: Home },
@@ -25,6 +29,7 @@ export function BottomNav({ labels }: BottomNavProps) {
     <nav className={styles.bottomNav} aria-label="Navegación principal">
       {navItems.map(({ href, label, Icon }) => {
         const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+        const showBadge = href === "/deudas" && alertCount > 0;
 
         return (
           <Link
@@ -35,6 +40,13 @@ export function BottomNav({ labels }: BottomNavProps) {
           >
             <span className={styles.iconPill}>
               <Icon size={20} strokeWidth={isActive ? 2.4 : 1.9} />
+              {showBadge && (
+                <span
+                  className={`${styles.navBadge} ${hasUrgent ? styles.navBadgeUrgent : styles.navBadgeSoon}`}
+                >
+                  {alertCount > 9 ? "9+" : alertCount}
+                </span>
+              )}
             </span>
             <span className={styles.label}>{label}</span>
           </Link>

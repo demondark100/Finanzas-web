@@ -2,6 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import type { Dictionary } from "@/i18n";
+import {
+  classifyDueSeverity,
+  computeDayDiff,
+} from "@/modules/notifications/helpers/due-evaluator";
 import { formatCurrency } from "@/modules/transactions/helpers/formatters";
 import type { DebtContactSummary } from "../../types";
 import styles from "./debts-overview.module.css";
@@ -19,6 +23,20 @@ export function ContactCard({ contact, currency, labels }: ContactCardProps) {
   const subLabel =
     net > 0 ? labels.owesYou : net < 0 ? labels.youOwe : labels.settled;
 
+  const dueSeverity =
+    net !== 0 && contact.nextDueDate
+      ? classifyDueSeverity(computeDayDiff(new Date(contact.nextDueDate)))
+      : null;
+
+  const dueTag =
+    dueSeverity === "overdue"
+      ? { text: labels.dueOverdue, cls: styles.dueBadgeOverdue }
+      : dueSeverity === "due_today"
+        ? { text: labels.dueToday, cls: styles.dueBadgeToday }
+        : dueSeverity === "upcoming"
+          ? { text: labels.dueSoon, cls: styles.dueBadgeSoon }
+          : null;
+
   return (
     <Link href={`/deudas/${contact.id}`} className={styles.personCard}>
       <div className={styles.personLeft}>
@@ -28,7 +46,10 @@ export function ContactCard({ contact, currency, labels }: ContactCardProps) {
           {contact.name.charAt(0).toUpperCase()}
         </span>
         <div className={styles.personMeta}>
-          <span className={styles.personName}>{contact.name}</span>
+          <div className={styles.personNameRow}>
+            <span className={styles.personName}>{contact.name}</span>
+            {dueTag && <span className={`${styles.dueBadge} ${dueTag.cls}`}>{dueTag.text}</span>}
+          </div>
           {contact.note && <span className={styles.personNote}>{contact.note}</span>}
         </div>
       </div>

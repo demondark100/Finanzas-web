@@ -11,6 +11,7 @@ import type { Dictionary, Locale } from "@/i18n";
 import { logoutAction } from "@/modules/auth/handlers/auth-actions";
 import { updatePreferencesAction } from "../handlers/settings-actions";
 import type { SupportedCurrency, SupportedTheme, UserSettingsData } from "../types";
+import { PushSettingsCard } from "@/modules/notifications";
 import { ChangePinModal } from "./change-pin-modal";
 import { EditProfileModal } from "./edit-profile-modal";
 import { PreferencesCard } from "./preferences-card";
@@ -20,10 +21,11 @@ interface SettingsViewProps {
   user: UserSettingsData;
   rates?: { USD: number; EUR: number };
   labels: Dictionary["settings"];
+  notifLabels?: Dictionary["notifications"];
   savingText: string;
 }
 
-export function SettingsView({ user, rates, labels, savingText }: SettingsViewProps) {
+export function SettingsView({ user, rates, labels, notifLabels, savingText }: SettingsViewProps) {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [editProfileOpen, setEditProfileOpen] = useState(false);
@@ -80,6 +82,8 @@ export function SettingsView({ user, rates, labels, savingText }: SettingsViewPr
         onLanguageChange={(l) => l !== user.preferredLanguage && updatePref({ language: l })}
         onCurrencyChange={(c) => c !== user.preferredCurrency && updatePref({ currency: c })}
       />
+
+      {notifLabels && <PushSettingsCard labels={notifLabels} onToast={setToastMsg} />}
 
       <Card>
         <h3 className={styles.sectionTitle}>{labels.securityTitle}</h3>

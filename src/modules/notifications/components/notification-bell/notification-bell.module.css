@@ -1,0 +1,48 @@
+.finanzas-notif-bell {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-main);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease, background-color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.finanzas-notif-bell:active {
+  transform: scale(0.95);
+}
+
+.finanzas-notif-bell__badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 18px;
+  text-align: center;
+  border: 2px solid var(--color-bg);
+}
+
+.finanzas-notif-bell__badge--urgent {
+  background-color: var(--color-expense);
+}
+
+.finanzas-notif-bell__badge--upcoming {
+  background-color: var(--color-warning);
+}
+
+@media (min-width: 768px) {
+  .finanzas-notif-bell:hover {
+    background-color: var(--color-surface-hover);
+  }
+}

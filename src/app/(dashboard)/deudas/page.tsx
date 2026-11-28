@@ -35,6 +35,7 @@ export default async function DeudasPage() {
         labels={dict.debts}
         movLabels={dict.movements}
         savingText={dict.home.saving}
+        bellLabel={dict.notifications.bellLabel}
       />
     </main>
   );

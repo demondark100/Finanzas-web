@@ -63,6 +63,7 @@ export const debtEntries = pgTable(
       table.occurredAt.desc()
     ),
     index("debt_entries_user_idx").on(table.userId),
+    index("debt_entries_user_due_idx").on(table.userId, table.dueDate),
     check(
       "debt_entries_kind_check",
       sql`${table.kind} IN ('LENT', 'REPAYMENT_RECEIVED', 'BORROWED', 'REPAYMENT_PAID')`

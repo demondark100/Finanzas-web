@@ -19,7 +19,8 @@ export async function getDebtsOverview(userId: string): Promise<DebtsOverviewDat
         contactId: debtEntries.contactId,
         netBalance: sql<string>`COALESCE(SUM(CASE WHEN ${debtEntries.kind} IN ('LENT', 'REPAYMENT_PAID') THEN ${debtEntries.amount} ELSE -${debtEntries.amount} END), 0)`,
         entryCount: sql<number>`COUNT(*)::int`,
-        nextDueDate: sql<string | null>`MIN(CASE WHEN ${debtEntries.dueDate} IS NOT NULL THEN ${debtEntries.dueDate}::text END)`,
+        nextReceivableDue: sql<string | null>`MIN(CASE WHEN ${debtEntries.kind} = 'LENT' AND ${debtEntries.dueDate} IS NOT NULL THEN ${debtEntries.dueDate}::text END)`,
+        nextPayableDue: sql<string | null>`MIN(CASE WHEN ${debtEntries.kind} = 'BORROWED' AND ${debtEntries.dueDate} IS NOT NULL THEN ${debtEntries.dueDate}::text END)`,
       })
       .from(debtEntries)
       .where(eq(debtEntries.userId, userId))
@@ -35,6 +36,8 @@ export async function getDebtsOverview(userId: string): Promise<DebtsOverviewDat
     const netBalance = convertFromBase(Number(agg?.netBalance ?? 0), currency, rates);
     if (netBalance > 0) totalReceivable += netBalance;
     if (netBalance < 0) totalPayable += Math.abs(netBalance);
+    const rawDue =
+      netBalance > 0 ? agg?.nextReceivableDue : netBalance < 0 ? agg?.nextPayableDue : null;
 
     return {
       id: c.id,
@@ -43,7 +46,7 @@ export async function getDebtsOverview(userId: string): Promise<DebtsOverviewDat
       note: c.note ?? null,
       netBalance,
       entryCount: agg?.entryCount ?? 0,
-      nextDueDate: agg?.nextDueDate ? new Date(agg.nextDueDate).toISOString() : null,
+      nextDueDate: rawDue ? new Date(rawDue).toISOString() : null,
       updatedAt: c.updatedAt.toISOString(),
     };
   });

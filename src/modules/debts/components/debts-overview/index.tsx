@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { Dictionary } from "@/i18n";
+import { NotificationBell } from "@/modules/notifications";
 import { formatCurrency } from "@/modules/transactions/helpers/formatters";
 import type { DebtContactFilter, DebtContactSummary } from "../../types";
 import { ContactFormModal } from "../contact-form-modal";
@@ -22,10 +23,11 @@ interface DebtsOverviewProps {
   labels: Dictionary["debts"];
   movLabels: Dictionary["movements"];
   savingText: string;
+  bellLabel?: string;
 }
 
 export function DebtsOverview({
-  contacts, totalReceivable, totalPayable, currency, labels, movLabels, savingText,
+  contacts, totalReceivable, totalPayable, currency, labels, movLabels, savingText, bellLabel,
 }: DebtsOverviewProps) {
   const router = useRouter();
   const [filter, setFilter] = useState<DebtContactFilter>("ALL");
@@ -57,9 +59,12 @@ export function DebtsOverview({
           <h1 className={styles.title}>{labels.title}</h1>
           <p className={styles.subtitle}>{labels.subtitle}</p>
         </div>
-        <Button type="button" onClick={() => setModalOpen(true)} className={styles.addBtn}>
-          {labels.newPerson}
-        </Button>
+        <div className={styles.headerActions}>
+          {bellLabel && <NotificationBell label={bellLabel} />}
+          <Button type="button" onClick={() => setModalOpen(true)} className={styles.addBtn}>
+            {labels.newPerson}
+          </Button>
+        </div>
       </header>
 
       <GlobalSummaryCard

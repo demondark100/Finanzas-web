@@ -8,6 +8,7 @@
 
 .title { font-size: 24px; font-weight: 700; color: var(--color-text-main); }
 .subtitle { font-size: 13px; color: var(--color-text-muted); margin-top: 2px; }
+.headerActions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .addBtn { width: auto !important; min-height: 42px !important; padding: 8px 14px !important; font-size: 14px !important; }
 
 .globalCard { padding: 18px 16px; text-align: center; margin-bottom: 16px; }
@@ -60,7 +61,12 @@
 .avatarIn { background-color: var(--color-income-light); color: var(--color-income); }
 .avatarOut { background-color: var(--color-expense-light); color: var(--color-expense); }
 .personMeta { display: flex; flex-direction: column; min-width: 0; }
+.personNameRow { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .personName { font-size: 16px; font-weight: 700; color: var(--color-text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dueBadge { font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: var(--radius-full); flex-shrink: 0; }
+.dueBadgeOverdue { background-color: var(--color-expense-light); color: var(--color-expense); }
+.dueBadgeToday { background-color: var(--color-warning-light); color: var(--color-warning); }
+.dueBadgeSoon { background-color: var(--color-primary-light); color: var(--color-primary); }
 .personNote { font-size: 12px; color: var(--color-text-muted); }
 .personRight { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .balanceStack { display: flex; flex-direction: column; align-items: flex-end; }

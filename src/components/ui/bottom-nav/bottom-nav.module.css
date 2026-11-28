@@ -37,6 +37,7 @@
 }
 
 .iconPill {
+  position: relative;
   width: 56px;
   height: 32px;
   border-radius: var(--radius-full);
@@ -45,6 +46,30 @@
   justify-content: center;
   margin-bottom: 3px;
   transition: background-color 0.18s ease, transform 0.15s ease;
+}
+
+.navBadge {
+  position: absolute;
+  top: 0;
+  right: 6px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 16px;
+  text-align: center;
+  border: 1.5px solid var(--color-surface);
+}
+
+.navBadgeUrgent {
+  background-color: var(--color-expense);
+}
+
+.navBadgeSoon {
+  background-color: var(--color-warning);
 }
 
 .label {

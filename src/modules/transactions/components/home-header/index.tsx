@@ -4,12 +4,14 @@ import React from "react";
 import Link from "next/link";
 import { Eye, EyeOff, Lock } from "lucide-react";
 import type { Dictionary } from "@/i18n";
+import { NotificationBell } from "@/modules/notifications";
 import styles from "./home-header.module.css";
 
 interface HomeHeaderProps {
   userName: string;
   hideAmounts: boolean;
   labels: Dictionary["home"];
+  bellLabel?: string;
   onTogglePrivacy: () => void;
 }
 
@@ -17,6 +19,7 @@ export function HomeHeader({
   userName,
   hideAmounts,
   labels,
+  bellLabel,
   onTogglePrivacy,
 }: HomeHeaderProps) {
   const firstName = userName.trim().split(/\s+/)[0] || userName;
@@ -32,6 +35,7 @@ export function HomeHeader({
       </Link>
 
       <div className={styles.actions}>
+        {bellLabel && <NotificationBell label={bellLabel} />}
         <button
           type="button"
           onClick={onTogglePrivacy}

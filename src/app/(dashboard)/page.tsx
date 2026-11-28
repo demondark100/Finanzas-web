@@ -30,6 +30,7 @@ export default async function HomePage() {
         currency={currency}
         locale={locale}
         labels={dict.home}
+        notifLabels={dict.notifications}
       />
     </main>
   );
